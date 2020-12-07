@@ -18,14 +18,28 @@
  
 /** @brief Returns the number of occurences of the first character in the following string
  */
-bool wipeDisk(char* disk)
+bool wipeDisk(char* disk, ssize_t chunkSize = 512)
 {
     // Open the given disk file
     int chunk = open(disk, O_WRONLY);
+
+    // If open returns < 0 this signifies an error opening the disk file
+    if(chunk < 0)
+    {
+        fprintf(stderr, "Error opening disk file\n");
+        return EXIT_FAILURE;
+    }
     
     // Write 0s to the disk in chunks of 512 bytes - stop when unable to write a full 512 bytes
+    char* zeroes = reinterpret_cast<char*>(calloc(1, chunkSize));
+    ssize_t written, total = 0;
+    do{
+        written = write(chunk, zeroes, chunkSize);
+        total += written;
+    } while (written == chunkSize);
 
     // When unable to write any more chunks return a success along with the number of bytes written
+
 
     // Close the given disk file
     close(chunk);
