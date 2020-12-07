@@ -39,10 +39,12 @@ bool wipeDisk(char* disk, ssize_t chunkSize = 512)
     } while (written == chunkSize);
 
     // When unable to write any more chunks return a success along with the number of bytes written
+    printf("\rBytes written: %chunk", total);
+    printf("\nWiping successful\n");
 
-
-    // Close the given disk file
+    // Close the given disk file and free the allocated memory
     close(chunk);
+    free(zeroes);
  
     return EXIT_SUCCESS;
 }
