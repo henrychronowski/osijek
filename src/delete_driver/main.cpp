@@ -1,19 +1,16 @@
 /**
  * @file main.cpp
- * @brief Driver code for palindrome library
+ * @brief Driver code to demonstrate disk deletion library
  * 
  * @author Henry Chronowski
- * @assignment Lab 12.1
- * @date 29/11/2020
- * @credits Lecture 12.1
- * https://www.boost.org/doc/libs/1_71_0/doc/html/chrono.html
- * https://www.boost.org/doc/libs/1_71_0/doc/html/program_options.html
+ * @assignment Final Project
+ * @date 07/12/2020
+ * @credits  
  * 
  **/
 
 
-//#include "pal.h"
-#include "letterCheck.h"
+#include "diskDelete.h"
 #include <iostream>
  
 using namespace std;
@@ -25,16 +22,8 @@ int main()
         char buffer[64] = {0};
         cin.getline(buffer, 63);
  
-        // if (isPalindrome(buffer))
-        // {
-        //     cout << "Word is a palindrome" << endl;
-        // }
-        // else
-        // {
-        //     cout << "Word is not a palindrome" << endl;
-        // }
+        
 
-        cout << "Char " << buffer[0] << " occurs " << checkLetter(buffer) << " times.\n";
     }
  
     return 0;

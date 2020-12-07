@@ -1,14 +1,14 @@
 /**
- * @file letterCheck.h
- * @brief Function declarations for letter check library
+ * @file diskDelete.h
+ * @brief Function declarations for disk deletion library
  * 
  * @author Henry Chronowski
- * @assignment Lab 12.1
- * @date 29/11/2020
- * @credits Lecture 12.1
+ * @assignment Final Project
+ * @date 07/12/2020
+ * @credits   
  **/
 
-#ifndef LETTERCHECK_H
-#define LETTERCHECK_H
-int checkLetter(char* word);
+#ifndef DISKDELETE_H
+#define DISKDELETE_H
+bool wipeDisk(const char* disk);
 #endif

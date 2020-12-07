@@ -1,33 +1,34 @@
 /**
- * @file letterCheck.cpp
+ * @file diskDelete.cpp
  * @brief disk erasure library implementation
  * 
  * @author Henry Chronowski
- * @assignment Lab 12.1
- * @date 30/11/2020
- * @credits Lecture 12.1
+ * @assignment Final Project
+ * @date 07/12/2020
+ * @credits fdfs
  **/
 
 #include "diskDelete.h"
 #include <string.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
  
 /** @brief Returns the number of occurences of the first character in the following string
  */
-int checkLetter(char* word)
+bool wipeDisk(char* disk)
 {
-    int ret = 0;
+    // Open the given disk file
+    int chunk = open(disk, O_WRONLY);
+    
+    // Write 0s to the disk in chunks of 512 bytes - stop when unable to write a full 512 bytes
+
+    // When unable to write any more chunks return a success along with the number of bytes written
+
+    // Close the given disk file
+    close(chunk);
  
-    char *target = word;
-    int len = strlen(word);
-    char *check = target + 1;
- 
-    for (int i = 0 ; i < len ; ++i, ++check)
-    {
-        if (*check == *target)
-        {
-            ret++;
-        }
-    }
- 
-    return ret;
+    return EXIT_SUCCESS;
 }
