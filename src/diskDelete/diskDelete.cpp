@@ -18,14 +18,23 @@
 #include <filesystem>
  
 
+/** @brief Checks if the given device contains the root filesystem
+ *  @param {char*} disk - The path to the device file of the disk
+ *  @return {bool} - returns true/0 if it contains root, false/1 otherwise
+ */
+bool checkForRoot(const char* disk)
+{
+
+    return 1;
+}
 
 
 /** @brief Opens and wipes the given disk in chunks of the given size
  *  @param {char*} disk - The path to the device file of the disk
  *  @param {ssize_t} [chunkSize=512] - The chunk size in bytes with which to write
- *  @return {bool} - returns true/1 on success, false/0 on error
+ *  @return {bool} - returns true/0 on success, false/1 on error
  */
-bool wipeDisk(char* disk, ssize_t chunkSize = 512)
+bool wipeDisk(const char* disk, ssize_t chunkSize)
 {
     // Open the given disk file
     int chunk = open(disk, O_WRONLY);

