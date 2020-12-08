@@ -12,19 +12,11 @@
 
 #include "diskDelete.h"
 #include <iostream>
- 
-using namespace std;
- 
+  
 int main()
 {
-    while (1)
-    {
-        char buffer[64] = {0};
-        cin.getline(buffer, 63);
- 
-        
-
-    }
- 
-    return 0;
+    bool result;
+    result = wipeDisk("/dev/sda");
+    
+    return result;
 }

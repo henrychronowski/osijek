@@ -5,18 +5,25 @@
  * @author Henry Chronowski
  * @assignment Final Project
  * @date 07/12/2020
- * @credits fdfs
+ * @credits https://en.cppreference.com/w/cpp/language/explicit_cast
+ * 
  **/
 
 #include "diskDelete.h"
 #include <string.h>
-#include <stdio.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <filesystem>
  
-/** @brief Returns the number of occurences of the first character in the following string
+
+
+
+/** @brief Opens and wipes the given disk in chunks of the given size
+ *  @param {char*} disk - The path to the device file of the disk
+ *  @param {ssize_t} [chunkSize=512] - The chunk size in bytes with which to write
+ *  @return {bool} - returns true/1 on success, false/0 on error
  */
 bool wipeDisk(char* disk, ssize_t chunkSize = 512)
 {
@@ -39,7 +46,7 @@ bool wipeDisk(char* disk, ssize_t chunkSize = 512)
     } while (written == chunkSize);
 
     // When unable to write any more chunks return a success along with the number of bytes written
-    printf("\rBytes written: %chunk", total);
+    printf("\rBytes written: %ld", total);
     printf("\nWiping successful\n");
 
     // Close the given disk file and free the allocated memory
