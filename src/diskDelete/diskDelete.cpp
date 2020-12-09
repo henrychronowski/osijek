@@ -41,7 +41,7 @@ bool wipeDisk(const char* disk, ssize_t chunkSize)
     // If open returns < 0 this signifies an error opening the disk file
     if(chunk < 0)
     {
-        fprintf(stderr, "Error opening disk file: %ld\n", disk);
+        fprintf(stderr, "Error opening disk file\n");
         return EXIT_FAILURE;
     }
     

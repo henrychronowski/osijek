@@ -41,7 +41,7 @@ int main(int argc, const char *argv[])
 
         std::cout << "precheck " << disk << std::endl;
         result = checkForRoot(disk);
-        std::cout << result << std::endl;
+        std::cout << true << false << " " << result << std::endl;
         std::cout << "postcheck " << disk << std::endl;
         //result = wipeDisk(disk, 512);
     }

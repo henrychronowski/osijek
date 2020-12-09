@@ -25,7 +25,7 @@ $(LIB)/lib$(SO_NAME).so: $(SRC)/$(SO_NAME)/*.cpp
 	$(CXX) -fPIC -c -Wall -I$(INCLUDE) $^ -o $@ $(LIBRARIES)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/$(EXECUTABLE)/*.cpp
-	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) $^ -o $@ -L$(LIB) -l$(SO_NAME)
+	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) $^ -o $@ -L$(LIB) -l$(SO_NAME) $(LIBRARIES)
 
 clean:
 	-rm $(BIN)/*
