@@ -25,7 +25,7 @@ int main(int argc, const char *argv[])
     options_description desc{"Options"};
     desc.add_options()
       ("help,h", "Help screen")
-      ("log,l", value<std::string>()->default_value("log.txt"), "Log")
+      ("log,l", value<std::string>()->default_value("log.txt"), "Log output file")
       ("disk,d", value<std::string>()->default_value("/dev/sda"), "Disk file");
 
     variables_map vm;

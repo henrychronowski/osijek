@@ -30,36 +30,53 @@ bool checkForRoot(const char* disk)
 
 /** @brief Opens and wipes the given disk in chunks of the given size
  *  @param {char*} disk - The path to the device file of the disk
+ *  @param {unsigned short} [passes=1] - The number of passes over the drive to do
  *  @param {ssize_t} [chunkSize=512] - The chunk size in bytes with which to write
- *  @return {bool} - returns true/0 on success, false/1 on error
+ *  @return {bool} - returns EXIT_SUCCESS (0) on success, EXIT_FAILURE (1) on error
  */
-bool wipeDisk(const char* disk, ssize_t chunkSize)
+bool wipeDisk(const char* disk, ushort passes, ssize_t chunkSize)
 {
-    // Open the given disk file
-    int chunk = open(disk, O_WRONLY);
-
-    // If open returns < 0 this signifies an error opening the disk file
-    if(chunk < 0)
+    int result = EXIT_FAILURE;
+    // Validate pass number
+    if(passes == 0)
     {
-        fprintf(stderr, "Error opening disk file\n");
-        return EXIT_FAILURE;
+        printf("\nInvalid Pass Count\n");
+        return result;
     }
     
-    // Write 0s to the disk in chunks of 512 bytes - stop when unable to write a full 512 bytes
-    char* zeroes = reinterpret_cast<char*>(calloc(1, chunkSize));
-    ssize_t written, total = 0;
-    do{
-        written = write(chunk, zeroes, chunkSize);
-        total += written;
-    } while (written == chunkSize);
+    ushort i;
+    for(i = 0; i < passes; i++)
+    {
+   
+        // Open the given disk file
+        int chunk = open(disk, O_WRONLY);
 
-    // When unable to write any more chunks return a success along with the number of bytes written
-    printf("\rBytes written: %ld", total);
-    printf("\nWiping successful\n");
+        // If open returns < 0 this signifies an error opening the disk file
+        if(chunk < 0)
+        {
+            fprintf(stderr, "Error opening disk file\n");
+            result = EXIT_FAILURE;
+            break;
+        }
+    
+        // Write 0s to the disk in chunks of 512 bytes - stop when unable to write a full 512 bytes
+        char* zeroes = reinterpret_cast<char*>(calloc(1, chunkSize));
+        ssize_t written, total = 0;
+        do{
+            written = write(chunk, zeroes, chunkSize);
+            total += written;
+        } while (written == chunkSize);
 
-    // Close the given disk file and free the allocated memory
-    close(chunk);
-    free(zeroes);
+        // When unable to write any more chunks return a success along with the number of bytes written
+        printf("\rBytes written: %ld", total);
+        printf("\nPass successful\n");
+
+        // Close the given disk file and free the allocated memory
+        close(chunk);
+        free(zeroes);
+    }
+
+    printf("\nPasses complete: %ld", (long int)i);
  
-    return EXIT_SUCCESS;
+    return result;
 }
