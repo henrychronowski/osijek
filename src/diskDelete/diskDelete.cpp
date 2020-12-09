@@ -19,11 +19,11 @@
 
 /** @brief Checks if the given device contains the root filesystem
  *  @param {char*} disk - The path to the device file of the disk
- *  @return {bool} - returns true/0 if it contains root, false/1 otherwise
+ *  @return {bool} - returns true if it contains root, false otherwise
  */
 bool checkForRoot(const char* disk)
 {
-    //printf("\nDisk does not contain root filesystem\n");
+    printf("\nDisk does not contain root filesystem\n");
     return true;
 }
 
