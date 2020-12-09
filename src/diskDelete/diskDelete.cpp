@@ -16,7 +16,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <filesystem>
- 
 
 /** @brief Checks if the given device contains the root filesystem
  *  @param {char*} disk - The path to the device file of the disk
@@ -24,8 +23,8 @@
  */
 bool checkForRoot(const char* disk)
 {
-
-    return 1;
+    //printf("\nDisk does not contain root filesystem\n");
+    return true;
 }
 
 
@@ -42,7 +41,7 @@ bool wipeDisk(const char* disk, ssize_t chunkSize)
     // If open returns < 0 this signifies an error opening the disk file
     if(chunk < 0)
     {
-        fprintf(stderr, "Error opening disk file\n");
+        fprintf(stderr, "Error opening disk file: %ld\n", disk);
         return EXIT_FAILURE;
     }
     

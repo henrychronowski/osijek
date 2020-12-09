@@ -20,7 +20,7 @@ using namespace boost::program_options;
   
 int main(int argc, const char *argv[])
 {
-    bool result = EXIT_SUCCESS;
+    bool result;// = EXIT_SUCCESS;
 
     options_description desc{"Options"};
     desc.add_options()
@@ -36,11 +36,13 @@ int main(int argc, const char *argv[])
       std::cout << desc << '\n';
     else
     {
-        const char* logFile = vm["log"].as<const char*>();
-        const char* disk = vm["disk"].as<const char*>();
+        const char* logFile = vm["log"].as<std::string>().c_str();
+        const char* disk = vm["disk"].as<std::string>().c_str();
 
-        const char* disk = "/dev/sda";
+        std::cout << "precheck " << disk << std::endl;
         result = checkForRoot(disk);
+        std::cout << result << std::endl;
+        std::cout << "postcheck " << disk << std::endl;
         //result = wipeDisk(disk, 512);
     }
 
