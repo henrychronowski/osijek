@@ -6,7 +6,7 @@ SRC     := src
 INCLUDE := include
 LIB := lib
 
-LIBRARIES   := 
+LIBRARIES   := -lboost_program_options
 EXECUTABLE  := delete_driver
 
 SO_NAME := diskDelete
