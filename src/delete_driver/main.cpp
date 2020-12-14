@@ -25,7 +25,7 @@ int main(int argc, const char *argv[])
     options_description desc{"Options"};
     desc.add_options()
       ("help,h", "Help screen")
-      ("log,l", value<std::string>()->default_value("log.txt"), "Log output file")
+      ("log,l", value<std::string>()->default_value("log.html"), "Log output file")
       ("disk,d", value<std::string>()->default_value("/dev/sda"), "Disk file");
 
     variables_map vm;
@@ -39,7 +39,15 @@ int main(int argc, const char *argv[])
         const char* logFile = vm["log"].as<std::string>().c_str();
         const char* disk = vm["disk"].as<std::string>().c_str();
 
+        wipeData data;
+        data.result = 0;
+        data.passes = 1;
+        data.wiped = 1;
+        data.disk = disk;
+        data.chunkSize = 512;
+
         result = stat(disk);
+        logWipe(data, logFile);
         // result = !checkForRoot(disk);
         // result = wipeDisk(disk, 3);
     }
