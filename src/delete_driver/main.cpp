@@ -39,9 +39,9 @@ int main(int argc, const char *argv[])
         const char* logFile = vm["log"].as<std::string>().c_str();
         const char* disk = vm["disk"].as<std::string>().c_str();
 
-        
-        //result = !checkForRoot(disk);
-        //result = wipeDisk(disk, 512);
+        result = stat(disk);
+        // result = !checkForRoot(disk);
+        // result = wipeDisk(disk, 3);
     }
 
     

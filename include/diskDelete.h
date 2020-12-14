@@ -15,7 +15,9 @@
 #include <sys/types.h>          /// TODO: determine if this is necessary
 
 //typedef unsigned short ushort;
+const u_int toGB = 1024 * 1024 * 1024;
 
+int stat(const char* disk);
 bool checkForRoot(const char* disk);
 bool wipeDisk(const char* disk, ushort passes = 1, ssize_t chunkSize = 512);
 #endif

@@ -16,6 +16,34 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <filesystem>
+#include <sys/statvfs.h>
+
+
+#include <iostream>
+int stat(const char* disk)
+{
+    struct statvfs buff;
+    int result = statvfs(disk, &buff);
+
+    if(!result)
+    {
+        const double bsize = static_cast<double>(buff.f_bsize);
+        const double total = static_cast<double>((buff.f_blocks * buff.f_bsize) / toGB);
+        const double available = static_cast<double>((buff.f_bfree * buff.f_bsize) / toGB);
+        const double used = total - available;
+        const double usedPercentage = static_cast<double>((used * 100) / total);
+        std::cout <<"bs " << bsize << "\ntot " << total << "\navail " << available << "\nused " << used << "\nusedpct " << usedPercentage << std::endl;
+        
+        
+        // printf("Block size: %f\n", bsize);
+        // printf("Total: %f --> %.0f\n", total, total);
+        // printf("Available: %f --> %.0f\n", available, available);
+        // printf("Used: %f --> %.1f\n", used, used);
+        // printf("Used Percentage: %f --> %.0f\n", usedPercentage, usedPercentage);
+    }
+
+    return result;
+}
 
 /** @brief Checks if the given device contains the root filesystem
  *  @param {char*} disk - The path to the device file of the disk
