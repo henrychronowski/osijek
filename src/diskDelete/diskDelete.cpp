@@ -158,5 +158,7 @@ int logWipe(wipeData data, std::string logFile)
 
     log.close();
 
+    std::cout << "\nLog saved to " << logFile << std::endl;
+
     return 0;
 }

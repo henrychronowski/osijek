@@ -57,9 +57,9 @@ int main(int argc, const char *argv[])
           if(toupper(c) != 'Y')
             return EXIT_FAILURE + 1;
           
-          //wipeData data;
-          //result = wipeDisk(disk, data, passes, chunkSize);
-          //logWipe(data, logFile);
+          wipeData data;
+          result = wipeDisk(disk, data, passes, chunkSize);
+          logWipe(data, logFile);
         }
     }
 
