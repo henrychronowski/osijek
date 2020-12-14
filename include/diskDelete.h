@@ -4,7 +4,7 @@
  * 
  * @author Henry Chronowski
  * @assignment Final Project
- * @date 07/12/2020
+ * @date 13/12/2020
  * @credits   
  **/
 
@@ -24,7 +24,7 @@ struct wipeData
     ssize_t chunkSize;
 };
 
-int stat(const char* disk);
+int statDisk(const char* disk);
 int wipeDisk(const char* disk, wipeData&data, ushort passes = 1, ssize_t chunkSize = 512);
 int logWipe(wipeData data, std::string logFile);
 

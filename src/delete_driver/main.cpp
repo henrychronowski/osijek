@@ -1,10 +1,11 @@
 /**
  * @file main.cpp
  * @brief Driver code to demonstrate disk deletion library
+ * @return 0 on success, 1 on error, 2 on user abort
  * 
  * @author Henry Chronowski
  * @assignment Final Project
- * @date 07/12/2020
+ * @date 14/12/2020
  * @credits  
  * https://www.boost.org/doc/libs/1_63_0/doc/html/program_options.html
  * 
@@ -20,7 +21,7 @@ using namespace boost::program_options;
   
 int main(int argc, const char *argv[])
 {
-    int result;// = EXIT_SUCCESS;
+    int result = EXIT_FAILURE;
 
     options_description desc{"Options"};
     desc.add_options()
@@ -35,7 +36,11 @@ int main(int argc, const char *argv[])
     notify(vm);
 
     if (vm.count("help"))
+    {
       std::cout << desc << '\n';
+      std::cout << "Returns a 0 on success, 1 on error, and 2 on user abort\n";
+      return EXIT_FAILURE + 1;
+    }
     else
     {
         const char* logFile = vm["log"].as<std::string>().c_str();
@@ -43,7 +48,7 @@ int main(int argc, const char *argv[])
         const uint passes = vm["passes"].as<uint>();
         const ssize_t chunkSize = static_cast<ssize_t>(vm["chunk"].as<size_t>());
 
-        result = stat(disk);
+        result = statDisk(disk);
         if(result != 1)
         {
           char c;
@@ -52,9 +57,9 @@ int main(int argc, const char *argv[])
           if(toupper(c) != 'Y')
             return EXIT_FAILURE + 1;
           
-          wipeData data;
-          result = wipeDisk(disk, data, passes, chunkSize);
-          logWipe(data, logFile);
+          //wipeData data;
+          //result = wipeDisk(disk, data, passes, chunkSize);
+          //logWipe(data, logFile);
         }
     }
 

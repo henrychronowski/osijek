@@ -4,9 +4,14 @@
  * 
  * @author Henry Chronowski
  * @assignment Final Project
- * @date 07/12/2020
+ * @date 14/12/2020
  * @credits https://en.cppreference.com/w/cpp/language/explicit_cast
- * 
+ * https://stackoverflow.com/questions/21949198/styling-html-text-without-css
+ * https://www.mkssoftware.com/docs/man5/struct_statvfs.5.asp
+ * https://www.boost.org/doc/libs/1_63_0/doc/html/program_options.html
+ * https://man7.org/linux/man-pages/man2/open.2.html
+ * https://en.cppreference.com/w/c/memory/calloc
+ * https://www.man7.org/linux/man-pages/man2/write.2.html
  **/
 
 #include "diskDelete.h"
@@ -33,7 +38,7 @@ const std::string HTML_2STYLE_CLOSE = "</h2>\n";
  *  @param {char*} disk - The path to the device file of the disk
  *  @return {int} - returns 0 on success, 1 on error
  */
-int stat(const char* disk)
+int statDisk(const char* disk)
 {
     struct statvfs buff;
     int result = statvfs(disk, &buff);
@@ -56,11 +61,11 @@ int stat(const char* disk)
         std::cout << "Error opening disk: " << disk << std::endl;
     }
     
-
+    // This negates the result for consistency since statvfs returns -1 on error
     return -result;
 }
 
-/** @brief Opens and wipes the given disk in chunks of the given size
+/** @brief Opens and wipes the given disk in chunks of the given size, storing information in the given struct
  *  @param {char*} disk - The path to the device file of the disk
  *  @param {unsigned short} [passes=1] - The number of passes over the drive to do
  *  @param {ssize_t} [chunkSize=512] - The chunk size in bytes with which to write
@@ -107,16 +112,12 @@ int wipeDisk(const char* disk, wipeData&data, ushort passes, ssize_t chunkSize)
 
         data.passes++;
 
-        // When unable to write any more chunks return a success along with the number of bytes written
-        // printf("\rBytes written: %ld", total);
-        // printf("\nPass successful\n");
-
         // Close the given disk file and free the allocated memory
         close(chunk);
         free(zeroes);
-    }
 
-    // printf("\nPasses complete: %ld", (long int)i);
+        data.result = EXIT_SUCCESS;
+    }
  
     return data.result;
 }
@@ -142,7 +143,7 @@ int logWipe(wipeData data, std::string logFile)
 
     // Output information with HTML wrapper code to the log file
     log << HTML_HEADER + HTML_BODY_START + HTML_1STYLE_OPEN << data.disk << " wiping log" << HTML_1STYLE_CLOSE;
-    if(!data.result)
+    if(data.result == EXIT_SUCCESS)
     {
         log << HTML_2STYLE_OPEN << "Wiping successful" << HTML_2STYLE_CLOSE;
     }
