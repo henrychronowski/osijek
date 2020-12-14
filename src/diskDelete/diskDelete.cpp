@@ -15,10 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <filesystem>
 #include <sys/statvfs.h>
-
-
 #include <iostream>
 #include <fstream>
 
@@ -32,7 +29,10 @@ const std::string HTML_1STYLE_CLOSE = "</h1>\n";
 const std::string HTML_2STYLE_OPEN = "<h2>";
 const std::string HTML_2STYLE_CLOSE = "</h2>\n";
 
-
+/** @brief Outputs information about the given disk
+ *  @param {char*} disk - The path to the device file of the disk
+ *  @return {int} - returns 0 on success, 1 on error
+ */
 int stat(const char* disk)
 {
     struct statvfs buff;
@@ -46,27 +46,19 @@ int stat(const char* disk)
         const ulong fsize = buff.f_frsize;
         const fsfilcnt_t inodes = buff.f_files;
         const fsfilcnt_t free = buff.f_ffree;
-        const double freePct = (static_cast<double>(inodes - free) * 100.0) / static_cast<double>(inodes);
-
-
+        const double freePct = 100.0 - (static_cast<double>(inodes - free) * 100.0) / static_cast<double>(inodes);
         
         std::cout <<"Filesystem ID: " << fsID << "\nMount Flags: " << flags << "\nBlock Size: " << bsize << "\nFragment Size: " << fsize <<
             "\nTotal inodes: " << inodes << "\nFree inodes: " << free << " (" << freePct << "%)\n";
     }
+    else
+    {
+        std::cout << "Error opening disk: " << disk << std::endl;
+    }
+    
 
-    return result;
+    return -result;
 }
-
-/** @brief Checks if the given device contains the root filesystem
- *  @param {char*} disk - The path to the device file of the disk
- *  @return {bool} - returns true if it contains root, false otherwise
- */
-bool checkForRoot(const char* disk)
-{
-    printf("\nDisk does not contain root filesystem\n");
-    return true;
-}
-
 
 /** @brief Opens and wipes the given disk in chunks of the given size
  *  @param {char*} disk - The path to the device file of the disk
@@ -74,7 +66,7 @@ bool checkForRoot(const char* disk)
  *  @param {ssize_t} [chunkSize=512] - The chunk size in bytes with which to write
  *  @return {bool} - returns EXIT_SUCCESS (0) on success, EXIT_FAILURE (1) on error
  */
-bool wipeDisk(const char* disk, wipeData&data, ushort passes, ssize_t chunkSize)
+int wipeDisk(const char* disk, wipeData&data, ushort passes, ssize_t chunkSize)
 {
     // Set values to defaults
     data.result = EXIT_FAILURE;
@@ -138,7 +130,7 @@ int logWipe(wipeData data, std::string logFile)
 {
     std::ofstream log;
 
-    // Open the file in append mode in order to create it if it doesn't already exist then discard the ofstream
+    // Temporarily open the file in append mode in order to create it if it doesn't already exist
     (void) std::ofstream(logFile, std::ofstream::app);
 
     log.open(logFile);

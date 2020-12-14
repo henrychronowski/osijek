@@ -12,12 +12,8 @@
 #define DISKDELETE_H
 
 #include <stdio.h>
-#include <sys/types.h>          /// TODO: determine if this is necessary
+#include <sys/types.h>
 #include <string>
-
-//typedef unsigned short ushort;
-const u_int toGB = 1024 * 1024 * 1024;
-const std::string LOG_DIRECTORY = "~/";
 
 struct wipeData
 {
@@ -29,8 +25,7 @@ struct wipeData
 };
 
 int stat(const char* disk);
-bool checkForRoot(const char* disk);
-bool wipeDisk(const char* disk, ushort passes = 1, ssize_t chunkSize = 512);
+int wipeDisk(const char* disk, wipeData&data, ushort passes = 1, ssize_t chunkSize = 512);
 int logWipe(wipeData data, std::string logFile);
 
 #endif

@@ -26,7 +26,9 @@ int main(int argc, const char *argv[])
     desc.add_options()
       ("help,h", "Help screen")
       ("log,l", value<std::string>()->default_value("log.html"), "Log output file")
-      ("disk,d", value<std::string>()->default_value("/dev/sda"), "Disk file");
+      ("disk,d", value<std::string>()->default_value("/dev/sda"), "Disk file")
+      ("passes,p", value<uint>()->default_value(1), "Number of passes")
+      ("chunk,c", value<size_t>()->default_value(512), "Chunk size");
 
     variables_map vm;
     store(parse_command_line(argc, argv, desc), vm);
@@ -38,18 +40,22 @@ int main(int argc, const char *argv[])
     {
         const char* logFile = vm["log"].as<std::string>().c_str();
         const char* disk = vm["disk"].as<std::string>().c_str();
-
-        wipeData data;
-        data.result = 0;
-        data.passes = 1;
-        data.wiped = 1;
-        data.disk = disk;
-        data.chunkSize = 512;
+        const uint passes = vm["passes"].as<uint>();
+        const ssize_t chunkSize = static_cast<ssize_t>(vm["chunk"].as<size_t>());
 
         result = stat(disk);
-        logWipe(data, logFile);
-        // result = !checkForRoot(disk);
-        // result = wipeDisk(disk, 3);
+        if(result != 1)
+        {
+          char c;
+          std::cout << "Continue with wipe of " << disk << "? (Y/N) ";
+          std::cin >> c;
+          if(toupper(c) != 'Y')
+            return EXIT_FAILURE + 1;
+          
+          wipeData data;
+          result = wipeDisk(disk, data, passes, chunkSize);
+          logWipe(data, logFile);
+        }
     }
 
     
