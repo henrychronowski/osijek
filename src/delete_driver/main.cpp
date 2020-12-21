@@ -4,8 +4,7 @@
  * @return 0 on success, 1 on error, 2 on user abort
  * 
  * @author Henry Chronowski
- * @assignment Final Project
- * @date 14/12/2020
+ * @date 21/12/2020
  * @credits  
  * https://www.boost.org/doc/libs/1_63_0/doc/html/program_options.html
  * 

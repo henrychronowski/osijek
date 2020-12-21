@@ -3,8 +3,7 @@
  * @brief disk erasure library implementation
  * 
  * @author Henry Chronowski
- * @assignment Final Project
- * @date 14/12/2020
+ * @date 21/12/2020
  * @credits https://en.cppreference.com/w/cpp/language/explicit_cast
  * https://stackoverflow.com/questions/21949198/styling-html-text-without-css
  * https://www.mkssoftware.com/docs/man5/struct_statvfs.5.asp
@@ -24,15 +23,6 @@
 #include <iostream>
 #include <fstream>
 
-// HTML wrapper for the log file
-const std::string HTML_HEADER = "<doctype HTML>\n<html>\n<head> <title>Wipe Log</title>\n\t<style>h1{\n\t\tcolor:black;\n\t\tfont-size:20px;\n}\n\t</style>\n\t<style>h2{\n\t\tcolor:black;\n\t\tfont-size:15px;\n}\n\t</style>\n</head>\n";
-const std::string HTML_FOOTER = "</html>";
-const std::string HTML_BODY_START = "<body>";
-const std::string HTML_BODY_CLOSE = "</body>\n";
-const std::string HTML_1STYLE_OPEN = "<h1>";
-const std::string HTML_1STYLE_CLOSE = "</h1>\n";
-const std::string HTML_2STYLE_OPEN = "<h2>";
-const std::string HTML_2STYLE_CLOSE = "</h2>\n";
 
 /** @brief Outputs information about the given disk
  *  @param {char*} disk - The path to the device file of the disk
@@ -152,6 +142,7 @@ int logWipe(wipeData data, std::string logFile)
         log << HTML_2STYLE_OPEN << "Wiping failed" << HTML_2STYLE_CLOSE;
     }
     
+    log << HTML_2STYLE_OPEN << "Technician: " << data.user << HTML_2STYLE_CLOSE;
     log << HTML_2STYLE_OPEN << "Passes done: " << data.passes << HTML_2STYLE_CLOSE + HTML_2STYLE_OPEN << "Total bytes written: " << data.wiped << HTML_2STYLE_CLOSE;
     log << HTML_2STYLE_OPEN << "Chunk size used: " << data.chunkSize << HTML_2STYLE_CLOSE;
     log << HTML_BODY_CLOSE + HTML_FOOTER;
