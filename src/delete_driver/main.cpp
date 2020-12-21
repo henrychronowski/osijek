@@ -47,6 +47,7 @@ int main(int argc, const char *argv[])
         const char* disk = vm["disk"].as<std::string>().c_str();
         const uint passes = vm["passes"].as<uint>();
         const ssize_t chunkSize = static_cast<ssize_t>(vm["chunk"].as<size_t>());
+        const std::string user = vm["user"].as<std::string>();
 
         result = statDisk(disk);
         if(result != 1)
@@ -57,9 +58,10 @@ int main(int argc, const char *argv[])
           if(toupper(c) != 'Y')
             return EXIT_FAILURE + 1;
           
-          // wipeData data;
+          wipeData data;
+          data.user = user;
           // result = wipeDisk(disk, data, passes, chunkSize);
-          // logWipe(data, logFile);
+          logWipe(data, logFile);
         }
     }
 
