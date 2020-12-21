@@ -16,6 +16,8 @@ Returns a 0 on success, 1 on error, and 2 on user abort.
 
 ### Switches:
     -h [ --help ]                 Help screen
+
+    -u [ --user ]                 Technician identification
   
     -l [ --log ] arg (=log.html)  Log output file
   
