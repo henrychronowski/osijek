@@ -1,5 +1,5 @@
 # osijek
-This repository contains a shared object library and associated driver code that is built to contain disk erasure functionality as well as logging of the erasing process. This is being developed as the final project for CSI-230 at Champlain College. This program erases the given disk by writing zeros to it for a specified number of passes in a specified chunk size.
+This repository contains a shared object library and associated driver code that is built to contain disk erasure functionality as well as logging of the erasing process. This was originally developed as the final project for CSI-230 at Champlain College and is under current development for use at the college's help desk.
 
 ## Dependencies
 The driver code for this project utilizes the [Boost Program Options library](https://www.boost.org/doc/libs/1_63_0/doc/html/program_options.html). Having this library installed in your system and added to the include directories is necessary to build the driver code.
