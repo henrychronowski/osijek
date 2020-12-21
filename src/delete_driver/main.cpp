@@ -26,6 +26,7 @@ int main(int argc, const char *argv[])
     options_description desc{"Options"};
     desc.add_options()
       ("help,h", "Help screen")
+      ("user,u", value<std::string>()->required(), "Name of operator")
       ("log,l", value<std::string>()->default_value("log.html"), "Log output file")
       ("disk,d", value<std::string>()->default_value("/dev/sda"), "Disk file")
       ("passes,p", value<uint>()->default_value(1), "Number of passes")
@@ -57,9 +58,9 @@ int main(int argc, const char *argv[])
           if(toupper(c) != 'Y')
             return EXIT_FAILURE + 1;
           
-          wipeData data;
-          result = wipeDisk(disk, data, passes, chunkSize);
-          logWipe(data, logFile);
+          // wipeData data;
+          // result = wipeDisk(disk, data, passes, chunkSize);
+          // logWipe(data, logFile);
         }
     }
 

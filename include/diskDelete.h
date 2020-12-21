@@ -22,6 +22,7 @@ struct wipeData
     unsigned long long wiped;
     ushort passes;
     ssize_t chunkSize;
+    std::string user;
 };
 
 int statDisk(const char* disk);
